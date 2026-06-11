@@ -15,10 +15,10 @@ mongoose.connect(connectionString)
 {
     console.log("Connected to MongoDB");
 })
-.catch(err)
+.catch((err) =>
 {
     console.error("Error connecting to MongoDB:", err);
-};
+});
 
 // Define routes
 app.get("/",(req, res) =>
