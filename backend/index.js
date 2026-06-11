@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 
 // Create an instance of the Express application
 const app = express();
@@ -8,6 +9,16 @@ app.use(express.json());
 
 // MongoDB connection string (replace <db_password> with your actual password)
 const connectionString = "";
+
+mongoose.connect(connectionString)
+.then(()=>
+{
+    console.log("Connected to MongoDB");
+})
+.catch(err)
+{
+    console.error("Error connecting to MongoDB:", err);
+};
 
 // Define routes
 app.get("/",(req, res) =>
