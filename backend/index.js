@@ -3,10 +3,13 @@ import express from "express";
 // Create an instance of the Express application
 const app = express();
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
 // Define routes
 app.get("/",(req, res) =>
 {
-    console.log(req);
+    console.log(req.body);
     console.log("Get request received");
     res.json({message: "Hello Sasidu !"});
 });
