@@ -1,27 +1,31 @@
 import express from "express";
 
+// Create an instance of the Express application
 const app = express();
 
-app.get("/",() =>
+// Define routes
+app.get("/",(req, res) =>
 {
+    console.log(req);
     console.log("Get request received");
 });
 
-app.post("/",() =>
+app.post("/",(req, res) =>
 {
     console.log("Post request received");
 });
 
-app.delete("/", () =>
+app.delete("/", (req, res) =>
 {
     console.log("Delete request received");
 });
 
-app.put("/", () =>
+app.put("/", (req, res) =>
 {
     console.log("Put request received");
 });
 
+// Start the server
 app.listen(5000, () =>
 {
     console.log("Server is running on port 5000...");
