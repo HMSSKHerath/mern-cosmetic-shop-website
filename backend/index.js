@@ -8,6 +8,7 @@ app.get("/",(req, res) =>
 {
     console.log(req);
     console.log("Get request received");
+    res.json({message: "Hello Sasidu !"});
 });
 
 app.post("/",(req, res) =>
