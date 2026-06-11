@@ -6,6 +6,9 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// MongoDB connection string (replace <db_password> with your actual password)
+const connectionString = "mongodb+srv://admin:<db_password>@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+
 // Define routes
 app.get("/",(req, res) =>
 {
