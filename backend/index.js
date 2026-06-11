@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 // MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "mongodb+srv://admin:<db_password>@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+const connectionString = "";
 
 // Define routes
 app.get("/",(req, res) =>
