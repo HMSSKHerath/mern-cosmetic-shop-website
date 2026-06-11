@@ -25,16 +25,19 @@ app.get("/",(req, res) =>
 app.post("/",(req, res) =>
 {
     console.log("Post request received");
+    res.json({ message: "Post request received" });
 });
 
 app.delete("/", (req, res) =>
 {
     console.log("Delete request received");
+    res.json({ message: "Delete request received" });
 });
 
 app.put("/", (req, res) =>
 {
     console.log("Put request received");
+    res.json({ message: "Put request received" });
 });
 
 // Start the server
