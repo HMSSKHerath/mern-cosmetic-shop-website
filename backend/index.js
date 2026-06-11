@@ -19,7 +19,7 @@ app.get("/",(req, res) =>
         title = "Ms. ";
     }
 
-    res.json(`message: Hello ${title} ${req.body.Name}`);
+    res.json({ message: `Hello ${title} ${req.body.Name}` });
 });
 
 app.post("/",(req, res) =>
