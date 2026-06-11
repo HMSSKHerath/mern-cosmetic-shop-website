@@ -11,7 +11,15 @@ app.get("/",(req, res) =>
 {
     console.log(req.body);
     console.log("Get request received");
-    res.json({message: "request received"});
+
+    let title = "Mr. ";
+
+    if(req.body.Gender === "Female")
+    {
+        title = "Ms. ";
+    }
+
+    res.json(`message: Hello ${title} ${req.body.Name}`);
 });
 
 app.post("/",(req, res) =>
