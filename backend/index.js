@@ -11,7 +11,7 @@ app.get("/",(req, res) =>
 {
     console.log(req.body);
     console.log("Get request received");
-    res.json({message: "Hello Sasidu !"});
+    res.json({message: "request received"});
 });
 
 app.post("/",(req, res) =>
