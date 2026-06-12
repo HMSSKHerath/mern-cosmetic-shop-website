@@ -1,7 +1,5 @@
 import express from "express";
 import mongoose from "mongoose";
-import dns from "node:dns/promises";
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 // Create an instance of the Express application
 const app = express();
