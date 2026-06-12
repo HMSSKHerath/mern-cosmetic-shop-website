@@ -41,7 +41,6 @@ app.post("/",(req, res) =>
 {
     console.log(req.body);
     console.log("Post request received");
-    res.json({ message: "Post request received" });
 
     const newStudent = new Student(
     {
@@ -49,7 +48,15 @@ app.post("/",(req, res) =>
         age: req.body.age,
         city: req.body.city
     });
-    newStudent.save();
+    newStudent.save()
+    .then(() =>
+    {
+        res.json({ message: "Student saved successfully" });
+    })
+    .catch((err)=>
+    {
+        res.json({ message: "Error saving student" });
+    })
 });
 
 app.delete("/", (req, res) =>
