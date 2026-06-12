@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 // MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "mongodb+srv://admin:<db_password>@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+const connectionString = "mongodb+srv://admin:@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(connectionString)
 .then(()=>
@@ -34,21 +34,22 @@ app.get("/",(req, res) =>
 {
     console.log(req.body);
     console.log("Get request received");
-
-    let title = "Mr. ";
-
-    if(req.body.Gender === "Female")
-    {
-        title = "Ms. ";
-    }
-
-    res.json({ message: `Hello ${title} ${req.body.Name}` });
+    res.json({message: "Get request received"});
 });
 
 app.post("/",(req, res) =>
 {
+    console.log(req.body);
     console.log("Post request received");
     res.json({ message: "Post request received" });
+
+    const newStudent = new Student(
+    {
+        name: req.body.name,
+        age: req.body.age,
+        city: req.body.city
+    });
+    newStudent.save();
 });
 
 app.delete("/", (req, res) =>
