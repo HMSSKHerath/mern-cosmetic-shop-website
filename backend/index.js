@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import Student from "./models/studentModel.js";
 
 // Create an instance of the Express application
 const app = express();
@@ -19,15 +20,6 @@ mongoose.connect(connectionString)
 {
     console.error("Error connecting to MongoDB:", err);
 });
-
-const studentSchema = new mongoose.Schema(
-{
-    name: String,
-    age: Number,
-    city: String
-});
-
-const Student = mongoose.model("Student", studentSchema);
 
 // Define routes
 app.get("/",(req, res) =>
