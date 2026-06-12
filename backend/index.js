@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 // MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "";
+const connectionString = "mongodb+srv://admin:<db_password>@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(connectionString)
 .then(()=>
@@ -19,6 +19,15 @@ mongoose.connect(connectionString)
 {
     console.error("Error connecting to MongoDB:", err);
 });
+
+const studentSchema = new mongoose.Schema(
+{
+    name: String,
+    age: Number,
+    city: String
+});
+
+const Student = mongoose.model("Student", studentSchema);
 
 // Define routes
 app.get("/",(req, res) =>
