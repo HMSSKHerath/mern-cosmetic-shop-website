@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import Student from "./models/studentModel.js";
+import studentRouter from "./routes/studentRouter.js";
 
 // Create an instance of the Express application
 const app = express();
@@ -21,53 +22,8 @@ mongoose.connect(connectionString)
     console.error("Error connecting to MongoDB:", err);
 });
 
-// Define routes
-app.get("/",(req, res) =>
-{
-    Student.find()
-    .then((students) =>
-    {
-        res.json(students);
-    })
-    .catch((err) =>
-    {
-        res.json({ message: "Error fetching students" });
-    });
-});
+app.use("/students", studentRouter);
 
-app.post("/",(req, res) =>
-{
-    console.log(req.body);
-    console.log("Post request received");
-
-    const newStudent = new Student(
-    {
-        name: req.body.name,
-        age: req.body.age,
-        city: req.body.city
-    });
-    newStudent.save()
-    .then(() =>
-    {
-        res.json({ message: "Student saved successfully" });
-    })
-    .catch((err)=>
-    {
-        res.json({ message: "Error saving student" });
-    })
-});
-
-app.delete("/", (req, res) =>
-{
-    console.log("Delete request received");
-    res.json({ message: "Delete request received" });
-});
-
-app.put("/", (req, res) =>
-{
-    console.log("Put request received");
-    res.json({ message: "Put request received" });
-});
 
 // Start the server
 app.listen(5000, () =>
