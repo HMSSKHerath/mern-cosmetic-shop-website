@@ -24,9 +24,15 @@ mongoose.connect(connectionString)
 // Define routes
 app.get("/",(req, res) =>
 {
-    console.log(req.body);
-    console.log("Get request received");
-    res.json({message: "Get request received"});
+    Student.find()
+    .then((students) =>
+    {
+        res.json(students);
+    })
+    .catch((err) =>
+    {
+        res.json({ message: "Error fetching students" });
+    });
 });
 
 app.post("/",(req, res) =>
