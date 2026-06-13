@@ -1,6 +1,5 @@
 import express from "express";
 import mongoose from "mongoose";
-import Student from "./models/studentModel.js";
 import studentRouter from "./routes/studentRouter.js";
 
 // Create an instance of the Express application
