@@ -21,7 +21,9 @@ mongoose.connect(connectionString)
     console.error("Error connecting to MongoDB:", err);
 });
 
+// Import the Routers
 app.use("/students", studentRouter);
+app.use("/users", userRouter);
 
 
 // Start the server
