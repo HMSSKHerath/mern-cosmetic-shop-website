@@ -21,3 +21,5 @@ function createUser(req, res)
         res.json({ message: "Error creating user" });
     });
 }
+
+export { createUser };
