@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import studentRouter from "./routes/studentRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 // Create an instance of the Express application
 const app = express();
