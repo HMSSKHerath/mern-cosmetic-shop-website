@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 
 function createUser(req, res)
 {
@@ -8,7 +9,7 @@ function createUser(req, res)
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: req.body.password,
-        role: req.body.role,
+        role: req.body.role
     });
     
     newUser.save()
