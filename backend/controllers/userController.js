@@ -28,20 +28,20 @@ function createUser(req, res)
 function loginUser(req, res)
 {
     User.findOne({email: req.body.email})
-    .then((user)=>
+    .then((foundUser)=>
     {
-        if(!user)
+        if(!foundUser)
         {
             return res.json({ message: "User not found" });
         }
 
-        const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
+        const isPasswordValid = bcrypt.compareSync(req.body.password, foundUser.password);
 
         if(!isPasswordValid)
         {
             return res.json({ message: "Invalid password" });
         }
-        
+
         res.json({ message: "User logged in successfully" });
     })
     .catch(()=>
