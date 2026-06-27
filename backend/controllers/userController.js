@@ -25,4 +25,29 @@ function createUser(req, res)
     });
 }
 
-export { createUser };
+function loginUser(req, res)
+{
+    User.findOne({email: req.body.email})
+    .then((user)=>
+    {
+        if(!user)
+        {
+            return res.json({ message: "User not found" });
+        }
+
+        const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
+
+        if(!isPasswordValid)
+        {
+            return res.json({ message: "Invalid password" });
+        }
+        
+        res.json({ message: "User logged in successfully" });
+    })
+    .catch(()=>
+    {
+        res.json({ message: "Error logging in user" });
+    });
+}
+
+export { createUser , loginUser };
