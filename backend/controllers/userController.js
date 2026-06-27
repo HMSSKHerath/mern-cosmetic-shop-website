@@ -3,12 +3,14 @@ import bcrypt from "bcryptjs";
 
 function createUser(req, res)
 {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
     const newUser = new User(
     {
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        password: req.body.password,
+        password: hashedPassword,
         role: req.body.role
     });
     
