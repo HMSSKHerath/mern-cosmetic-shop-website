@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/users", userRouter);
 
 // MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "mongodb+srv://admin:12345@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+const connectionString = "mongodb+srv://admin:@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(connectionString)
 .then(()=>
