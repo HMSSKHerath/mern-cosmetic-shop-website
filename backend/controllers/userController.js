@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 function createUser(req, res)
 {
@@ -42,7 +43,19 @@ function loginUser(req, res)
             return res.json({ message: "Invalid password" });
         }
 
-        res.json({ message: "User logged in successfully" });
+        const token = jwt.sign(
+            {
+                email: foundUser.email,
+                firstName: foundUser.firstName,
+                lastName: foundUser.lastName,
+                role: foundUser.role,
+                isblocked: foundUser.isblocked,
+                isEmailVerified: foundUser.isEmailVerified
+            },
+            "secret_key"
+        )
+
+        res.json({ message: "User logged in successfully", token: token });
     })
     .catch(()=>
     {
