@@ -10,31 +10,10 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-app.use((req,res,next)=>
-{
-    let token = req.headers.authorization;
-    
-    if(!token)
-    {
-        return res.json({ message: "Unauthorized Access" });
-    }
-
-    token = token.replace("Bearer ", "");
-    console.log(token);
-    jwt.verify(token, "secret_key", (err, decoded)=>
-    {
-        if(!decoded)
-        {
-            return res.json({ message: "Invalid Token Please Login Again" });
-        }
-
-        req.user = decoded;
-    });
-    next();
-});
+app.use("/users", userRouter);
 
 // MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "mongodb+srv://admin:@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+const connectionString = "mongodb+srv://admin:12345@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(connectionString)
 .then(()=>
@@ -43,13 +22,35 @@ mongoose.connect(connectionString)
 })
 .catch((err) =>
 {
-    console.error("Error connecting to MongoDB:", err);
+    console.log("Error connecting to MongoDB:", err);
+});
+
+// Middleware to verify JWT token
+app.use((req,res,next)=>
+{
+    let token = req.headers.authorization;
+    
+    if(!token)
+    {
+        return res.status(401).json({ message: "Unauthorized Access" });
+    }
+
+    token = token.replace("Bearer ", "");
+    console.log(token);
+    jwt.verify(token, "secret_key", (err, decoded)=>
+    {
+        if(err || !decoded)
+        {
+            return res.status(401).json({ message: "Invalid Token Please Login Again" });
+        }
+
+        req.user = decoded;
+        next();
+    });
 });
 
 // Import the Routers
 app.use("/students", studentRouter);
-app.use("/users", userRouter);
-
 
 // Start the server
 app.listen(5000, () =>
