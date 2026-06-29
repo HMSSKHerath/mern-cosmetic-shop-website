@@ -52,7 +52,7 @@ function loginUser(req, res)
                 isblocked: foundUser.isblocked,
                 isEmailVerified: foundUser.isEmailVerified
             },
-            "secret_key"
+            "secret_key", { expiresIn: "1h" }
         )
 
         res.status(200).json({ message: "User logged in successfully", token: token });
