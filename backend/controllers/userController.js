@@ -63,4 +63,19 @@ function loginUser(req, res)
     });
 }
 
-export { createUser , loginUser };
+function isAdmin(req)
+{
+    if(!req.user)
+    {
+        return false;
+    }
+
+    if(req.user.role !== "admin")
+    {
+        return false;
+    }
+
+    return true;
+}
+
+export { createUser , loginUser , isAdmin };
