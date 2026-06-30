@@ -4,8 +4,8 @@ import {getAllProducts , getProductById , createProduct , deleteProduct , update
 const productRouter = express.Router();
 
 productRouter.get("/", getAllProducts);
-productRouter.get("/:productId", getProductById);
 productRouter.post("/", createProduct);
+productRouter.get("/:productId", getProductById);
 productRouter.delete("/:productId", deleteProduct);
 productRouter.put("/:productId", updateProduct);
 
