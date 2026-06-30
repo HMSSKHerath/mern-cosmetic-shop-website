@@ -19,7 +19,8 @@ async function createProduct(req,res)
     }
     catch(error)
     {
-        res.status(500).json({ message: "Error creating product" , error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Error creating product" });
     }
 }
 
@@ -32,8 +33,35 @@ async function getAllProducts(req,res)
     }
     catch(error)
     {
-        res.status(500).json({ message: "Error fetching products" , error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Error fetching products" });
     }
 }
 
-export { createProduct , getAllProducts };
+async function deleteProduct(req,res)
+{
+    if(!isAdmin(req))
+    {
+        return res.status(403).json({ message: "Forbidden: You do not have permission to delete a product" });
+    }
+
+    try
+    {
+        const productId = req.body.productId;
+
+        if(!productId)
+        {
+            return res.status(400).json({ message: "Product ID is required" });
+        }
+
+        await Product.deleteOne({ productId: productId });
+        res.status(200).json({ message: "Product deleted successfully" });
+    }
+    catch(error)
+    {
+        console.error(error);
+        res.status(500).json({ message: "Error deleting product"});
+    }
+}
+
+export { createProduct , getAllProducts , deleteProduct };
