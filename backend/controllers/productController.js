@@ -47,12 +47,7 @@ async function deleteProduct(req,res)
 
     try
     {
-        const productId = req.body.productId;
-
-        if(!productId)
-        {
-            return res.status(400).json({ message: "Product ID is required" });
-        }
+        const productId = req.params.productId;
 
         await Product.deleteOne({ productId: productId });
         res.status(200).json({ message: "Product deleted successfully" });
@@ -64,4 +59,26 @@ async function deleteProduct(req,res)
     }
 }
 
-export { createProduct , getAllProducts , deleteProduct };
+async function updateProduct(req,res)
+{
+    if(!isAdmin(req))
+    {
+        return res.status(403).json({ message: "Forbidden: You do not have permission to update a product" });
+    }
+
+    try
+    {
+        const productId = req.params.productId;
+        const updatedData = req.body;
+
+        await Product.updateOne({ productId: productId }, updatedData);
+        res.status(200).json({ message: "Product updated successfully" });
+    }
+    catch(error)
+    {
+        console.error(error);
+        res.status(500).json({ message: "Error updating product" });
+    }
+}
+
+export { createProduct , getAllProducts , deleteProduct , updateProduct };
