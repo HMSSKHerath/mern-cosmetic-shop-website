@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import studentRouter from "./routes/studentRouter.js";
 import userRouter from "./routes/userRouter.js";
+import productRouter from "./routes/productRouter.js";
 
 // Create an instance of the Express application
 const app = express();
@@ -51,6 +52,7 @@ app.use((req,res,next)=>
 
 // Import the Routers
 app.use("/students", studentRouter);
+app.use("/products", productRouter);
 
 // Start the server
 app.listen(5000, () =>

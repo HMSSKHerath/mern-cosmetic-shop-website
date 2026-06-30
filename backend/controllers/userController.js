@@ -65,15 +65,8 @@ function loginUser(req, res)
 
 function isAdmin(req)
 {
-    if(!req.user)
-    {
-        return false;
-    }
-
-    if(req.user.role !== "admin")
-    {
-        return false;
-    }
+    if(!req.user) return false;
+    if(req.user.role !== "admin") return false;
 
     return true;
 }
