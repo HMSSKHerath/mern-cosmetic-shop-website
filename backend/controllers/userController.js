@@ -2,42 +2,45 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-function createUser(req, res)
+async function createUser(req, res)
 {
-    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    try
+    {
+        const user = req.body;
+        const hashedPassword = bcrypt.hashSync(user.password, 10);
 
-    const newUser = new User(
-    {
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        password: hashedPassword,
-        role: req.body.role
-    });
-    
-    newUser.save()
-    .then(()=>
-    {
+        const newUser = new User(
+            {
+                email: user.email, 
+                firstName: user.firstName, 
+                lastName: user.lastName, 
+                password: hashedPassword , 
+                role:'user'
+            }
+        );
+        await newUser.save();
         res.status(201).json({ message: "User created successfully" });
-    })
-    .catch((error)=>
+    }
+    catch(error)
     {
         console.error(error);
-        res.status(500).json({ message: "Error creating user" });
-    });
+        res.status(500).json({ message: "Error saving user" });
+    }
 }
 
-function loginUser(req, res)
+async function loginUser(req, res)
 {
-    User.findOne({email: req.body.email})
-    .then((foundUser)=>
+    try
     {
+        const{ email, password } = req.body;
+        const foundUser = await User.findOne({ email: email });
+
         if(!foundUser)
         {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const isPasswordValid = bcrypt.compareSync(req.body.password, foundUser.password);
+        const isPasswordValid = bcrypt.compareSync(password, foundUser.password);
 
         if(!isPasswordValid)
         {
@@ -50,19 +53,19 @@ function loginUser(req, res)
                 firstName: foundUser.firstName,
                 lastName: foundUser.lastName,
                 role: foundUser.role,
-                isblocked: foundUser.isblocked,
+                isBlocked: foundUser.isBlocked,
                 isEmailVerified: foundUser.isEmailVerified
             },
-            "secret_key", { expiresIn: "1h" }
+            "jwt_key", { expiresIn: "1h" }
         )
 
         res.status(200).json({ message: "User logged in successfully", token: token });
-    })
-    .catch((error)=>
+    }
+    catch(error)
     {
         console.error(error);
         res.status(500).json({ message: "Error logging in user" });
-    });
+    }
 }
 
 function isAdmin(req)

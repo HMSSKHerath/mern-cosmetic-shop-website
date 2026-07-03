@@ -1,48 +1,34 @@
 import Student from "../models/studentModel.js";
 
-function getStudent(req , res)
+async function getStudent(req , res)
 {
-    Student.find()
-    .then((students) =>
+    try
     {
+        const students = await Student.find();
         res.status(200).json(students);
-    })
-    .catch((err) =>
+    }
+    catch(error)
     {
-        res.status(500).json({ message: "Error fetching students" });
-    });
-    console.log("Get request received");
+        console.error(error);
+        res.status(500).json({message:"Error fetching students"});
+    }
 }
 
-function createStudent(req , res)
+async function createStudent(req , res)
 {
-    if(!req.user)
+    try 
     {
-        return res.status(401).json({ message: "Invalid Token Please Login Again" });
-    }
+        const { name, age, city } = req.body;
+        const newStudent = new Student({name, age, city});
 
-    if(req.user.role !== "admin")
-    {
-        return res.status(403).json({ message: "You are not admin to perform this action" });
-    }
-    
-    const newStudent = new Student(
-    {
-        name: req.body.name,
-        age: req.body.age,
-        city: req.body.city
-    });
-    
-    newStudent.save()
-    .then(() =>
-    {
+        await newStudent.save();
         res.status(201).json({ message: "Student saved successfully" });
-    })
-    .catch(() =>
+    }   
+    catch (error)
     {
-        res.status(500).json({ message: "Error saving student"});
-    });
-    console.log("Post request received");
+        console.error(error);
+        res.status(500).json({ message: "Error saving student" });
+    } 
 }
 
 export { getStudent , createStudent };
