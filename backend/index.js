@@ -29,7 +29,7 @@ mongoose.connect(connectionString)
 // Middleware to verify JWT token
 app.use((req,res,next)=>
 {
-    let token = req.headers.authorization;
+    let token = req.headers["authorization"];
     
     if(!token)
     {
