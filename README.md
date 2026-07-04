@@ -13,12 +13,15 @@ This project is being built as part of a structured backend learning journey. So
 - ✅ Express server setup with middleware (`app.use()`, `app.listen()`)
 - ✅ MongoDB connection via Mongoose
 - ✅ MVC architecture (Model – Controller – Route)
-- ✅ Full CRUD operations (Create, Read, Update, Delete)
+- ✅ Product module — full CRUD (Create, Read, Update, Delete)
+- ✅ Student & User modules — partial CRUD
+- ✅ Promises and async/await patterns (all controllers refactored)
 - ✅ Password security with `bcrypt` (hashing & comparing)
 - ✅ JWT-based authentication (`jwt.sign()`, `jwt.verify()`)
-- ✅ Role-based authorization (admin-only routes)
-- ✅ Proper HTTP status codes (200, 201, 401, 404, 500)
-- ✅ Environment variables via `.env`
+- ✅ Role-based authorization — admin-only routes (`roleMiddleware.js`)
+- ✅ Auth middleware separated into its own file (`authMiddleware.js`)
+- ✅ Proper HTTP status codes (200, 201, 401, 403, 404, 500)
+- ✅ Environment variables via `.env` (`MONGO_URI`, `JWT_SECRET`)
 - ✅ API testing with Postman
 - ✅ Auto-restart in development using `nodemon`
 
@@ -40,12 +43,24 @@ This project is being built as part of a structured backend learning journey. So
 
 ```
 backend/
-├── controllers/      # Request handling logic
-├── models/           # Mongoose schemas
-├── routes/           # API endpoint definitions
-├── middleware/        # Auth & validation middleware
-├── .env               # Environment variables (not committed)
-├── index.js           # App entry point
+├── controllers/
+│   ├── productController.js
+│   ├── studentController.js
+│   └── userController.js
+├── middlewares/
+│   ├── authMiddleware.js     # JWT token verification
+│   └── roleMiddleware.js     # Admin role check
+├── models/
+│   ├── productModel.js
+│   ├── studentModel.js
+│   └── userModel.js
+├── routes/
+│   ├── productRouter.js
+│   ├── studentRouter.js
+│   └── userRouter.js
+├── .env                      # Environment variables (not committed)
+├── .gitignore
+├── index.js                  # App entry point
 └── package.json
 ```
 
@@ -109,6 +124,7 @@ Authorization: Bearer <your_token_here>
 
 ## 🗺️ Roadmap
 
+- [ ] Email verification (nodemailer + Gmail)
 - [ ] Input validation
 - [ ] Model relationships (`populate()`)
 - [ ] Centralized error-handling middleware
@@ -119,12 +135,12 @@ Authorization: Bearer <your_token_here>
 
 ## 👤 Author
 
-**H.M.S.S.K. Herath**
+**H.M.S.S.K. Herath**  
 Built as part of MERN stack learning and internship preparation.
 
 ---
 
 ## 📄 License
 
-This project is **proprietary**. All rights reserved.
+This project is **proprietary**. All rights reserved.  
 See [LICENSE](./LICENSE) for details — copying, modifying, or distributing this code without permission is not allowed.
