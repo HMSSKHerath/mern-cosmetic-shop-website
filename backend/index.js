@@ -5,6 +5,9 @@ import studentRouter from "./routes/studentRouter.js";
 import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 // Create an instance of the Express application
 const app = express();
 
@@ -13,8 +16,8 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 
-// MongoDB connection string (replace <db_password> with your actual password)
-const connectionString = "mongodb+srv://admin:@cluster0.ctlhqsc.mongodb.net/?appName=Cluster0";
+// Connect to MongoDB
+const connectionString = process.env.MONGO_URI;
 
 mongoose.connect(connectionString)
 .then(()=>
@@ -26,7 +29,6 @@ mongoose.connect(connectionString)
     console.log("Error connecting to MongoDB:", err);
 });
 
-// Middleware to verify JWT token
 app.use((req,res,next)=>
 {
     let token = req.headers["authorization"];
@@ -37,7 +39,7 @@ app.use((req,res,next)=>
     }
 
     token = token.replace("Bearer ", "");
-    jwt.verify(token, "jwt_key", (err, decoded)=>
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>
     {
         if(err || !decoded)
         {
