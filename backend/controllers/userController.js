@@ -1,6 +1,6 @@
-import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
 async function createUser(req, res)
 {
@@ -68,12 +68,4 @@ async function loginUser(req, res)
     }
 }
 
-function isAdmin(req)
-{
-    if(!req.user) return false;
-    if(req.user.role !== "admin") return false;
-
-    return true;
-}
-
-export { createUser , loginUser , isAdmin };
+export { createUser , loginUser };
