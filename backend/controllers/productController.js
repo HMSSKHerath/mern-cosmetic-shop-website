@@ -2,11 +2,6 @@ import Product from "../models/productModel.js";
 
 async function createProduct(req,res)
 {
-    if(!isAdmin(req))
-    {
-        return res.status(403).json({ message: "Forbidden: You do not have permission to create a product" });
-    }
-
     try
     {
         const productData = req.body;
@@ -59,11 +54,6 @@ async function getProductById(req,res)
 
 async function deleteProduct(req,res)
 {
-    if(!isAdmin(req))
-    {
-        return res.status(403).json({ message: "Forbidden: You do not have permission to delete a product" });
-    }
-
     try
     {
         const productId = req.params.productId;
@@ -80,11 +70,6 @@ async function deleteProduct(req,res)
 
 async function updateProduct(req,res)
 {
-    if(!isAdmin(req))
-    {
-        return res.status(403).json({ message: "Forbidden: You do not have permission to update a product" });
-    }
-
     try
     {
         const productId = req.params.productId;
