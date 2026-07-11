@@ -56,7 +56,7 @@ async function loginUser(req, res)
                 isBlocked: foundUser.isBlocked,
                 isEmailVerified: foundUser.isEmailVerified
             },
-            "jwt_key", { expiresIn: "1h" }
+            process.env.JWT_SECRET, { expiresIn: "1h" }
         )
 
         res.status(200).json({ message: "User logged in successfully", token: token });
