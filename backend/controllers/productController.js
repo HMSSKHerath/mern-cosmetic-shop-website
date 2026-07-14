@@ -49,8 +49,8 @@ async function getProductById(req,res)
 {
     try
     {
-        const productId = req.params.productId;
-        const product = await Product.findOne({ productId: productId });
+        const { productId } = req.params;
+        const product = await Product.findOne({ productId });
 
         if(!product)
         {
@@ -69,9 +69,16 @@ async function deleteProduct(req,res)
 {
     try
     {
-        const productId = req.params.productId;
+        const { productId } = req.params;
 
-        await Product.deleteOne({ productId: productId });
+        const existingProduct = await Product.findOne({ productId});
+
+        if(!existingProduct)
+        {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        await Product.deleteOne({ productId });
         res.status(200).json({ message: "Product deleted successfully" });
     }
     catch(error)
@@ -96,10 +103,10 @@ async function updateProduct(req,res)
         }
 
         await Product.updateOne(
-            {productId}, 
+            { productId }, 
             { name, altNames, description, price, labelPrice, category }
         );
-        
+
         res.status(200).json({ message: "Product updated successfully" });
     }
     catch(error)
