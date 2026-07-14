@@ -47,6 +47,11 @@ async function loginUser(req, res)
             return res.status(401).json({ message: "Invalid password" });
         }
 
+        if(foundUser.isBlocked)
+        {
+            return res.status(403).json({ message: "User is blocked" });
+        }
+
         const token = jwt.sign(
             {
                 email: foundUser.email,
