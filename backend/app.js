@@ -1,13 +1,13 @@
-import express from "express";
-import userRoutes from "./routes/userRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
+import express from 'express';
+import userRouter from './routes/userRouter.js';
+import productRouter from './routes/productRouter.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); // Middleware to parse JSON request bodies
 
-app.use("/users", userRoutes);
-app.use("/products", productRoutes);
-
+// Define routes
+app.use('/users', userRouter);
+app.use('/products', productRouter);
 
 export default app;
