@@ -6,15 +6,15 @@ async function createUser(req, res)
 {
     try
     {
-        const user = req.body;
-        const hashedPassword = bcrypt.hashSync(user.password, 10);
+        const { email, firstName, lastName, password} = req.body;
+        const hashedPassword = bcrypt.hashSync(password, 10);
 
         const newUser = new User(
             {
-                email: user.email, 
-                firstName: user.firstName, 
-                lastName: user.lastName, 
-                password: hashedPassword , 
+                email, 
+                firstName, 
+                lastName, 
+                password: hashedPassword, 
                 role:'user'
             }
         );
@@ -23,6 +23,11 @@ async function createUser(req, res)
     }
     catch(error)
     {
+        if(error.code === 11000)
+        {
+            return res.status(409).json({ message: "User with this email already registered" });
+        }
+
         console.error(error);
         res.status(500).json({ message: "Error saving user" });
     }
@@ -49,7 +54,7 @@ async function loginUser(req, res)
 
         if(foundUser.isBlocked)
         {
-            return res.status(403).json({ message: "User is blocked" });
+            return res.status(403).json({ message: "Your account has been blocked. Please contact support." });
         }
 
         const token = jwt.sign(
