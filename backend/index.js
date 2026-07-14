@@ -14,7 +14,6 @@ app.use(express.json());
 
 // Define routes
 app.use("/users", userRouter);
-app.use("/students", studentRouter);
 app.use("/products", productRouter);
 
 // Connect to MongoDB
