@@ -4,15 +4,28 @@ async function createProduct(req,res)
 {
     try
     {
-        const productData = req.body;
+        const { productId, name, altNames, description, price, labelPrice, category } = req.body;
 
-        const newProduct = new Product(productData);
+        const newProduct = new Product({
+            productId,
+            name,
+            altNames,
+            description,
+            price,
+            labelPrice,
+            category
+        });
 
         await newProduct.save();
         res.status(201).json({ message: "Product created successfully"});
     }
     catch(error)
     {
+        if(error.code === 11000)
+        {
+            return res.status(409).json({ message: "Product with this ID already exists" });
+        }
+
         console.error(error);
         res.status(500).json({ message: "Error creating product" });
     }
