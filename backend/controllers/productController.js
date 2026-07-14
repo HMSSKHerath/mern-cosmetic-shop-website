@@ -85,10 +85,21 @@ async function updateProduct(req,res)
 {
     try
     {
-        const productId = req.params.productId;
-        const updatedData = req.body;
+        const { productId } = req.params;
+        const { name, altNames, description, price, labelPrice, category } = req.body;
 
-        await Product.updateOne({ productId: productId }, updatedData);
+        const existingProduct = await Product.findOne({ productId });
+
+        if(!existingProduct)
+        {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        await Product.updateOne(
+            {productId}, 
+            { name, altNames, description, price, labelPrice, category }
+        );
+        
         res.status(200).json({ message: "Product updated successfully" });
     }
     catch(error)
