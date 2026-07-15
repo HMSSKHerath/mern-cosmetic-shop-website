@@ -10,17 +10,19 @@ A full-stack cosmetic e-commerce website built using **MongoDB, Express.js, Reac
 
 This project is being built as part of a structured backend learning journey. So far, the **backend** includes:
 
+- ✅ Professional folder structure (`app.js` + `server.js` separation, `config/db.js`)
 - ✅ Express server setup with middleware (`app.use()`, `app.listen()`)
-- ✅ MongoDB connection via Mongoose
+- ✅ MongoDB connection via Mongoose (`config/db.js`)
 - ✅ MVC architecture (Model – Controller – Route)
 - ✅ Product module — full CRUD (Create, Read, Update, Delete)
-- ✅ Student & User modules — partial CRUD
-- ✅ Promises and async/await patterns (all controllers refactored)
+- ✅ User module — register, login with blocked account detection
+- ✅ Duplicate entry detection (`error.code 11000 → 409 Conflict`)
+- ✅ Promises and async/await patterns (all controllers)
 - ✅ Password security with `bcrypt` (hashing & comparing)
 - ✅ JWT-based authentication (`jwt.sign()`, `jwt.verify()`)
 - ✅ Role-based authorization — admin-only routes (`roleMiddleware.js`)
 - ✅ Auth middleware separated into its own file (`authMiddleware.js`)
-- ✅ Proper HTTP status codes (200, 201, 401, 403, 404, 500)
+- ✅ Proper HTTP status codes (200, 201, 401, 403, 404, 409, 500)
 - ✅ Environment variables via `.env` (`MONGO_URI`, `JWT_SECRET`)
 - ✅ API testing with Postman
 - ✅ Auto-restart in development using `nodemon`
@@ -43,24 +45,24 @@ This project is being built as part of a structured backend learning journey. So
 
 ```
 backend/
+├── config/
+│   └── db.js                 # MongoDB connection
 ├── controllers/
 │   ├── productController.js
-│   ├── studentController.js
 │   └── userController.js
 ├── middlewares/
 │   ├── authMiddleware.js     # JWT token verification
 │   └── roleMiddleware.js     # Admin role check
 ├── models/
 │   ├── productModel.js
-│   ├── studentModel.js
 │   └── userModel.js
 ├── routes/
 │   ├── productRouter.js
-│   ├── studentRouter.js
 │   └── userRouter.js
 ├── .env                      # Environment variables (not committed)
 ├── .gitignore
-├── index.js                  # App entry point
+├── app.js                    # Express setup, middleware, routes
+├── server.js                 # Server entry point (app.listen)
 └── package.json
 ```
 
