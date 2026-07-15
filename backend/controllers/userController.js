@@ -45,16 +45,16 @@ async function loginUser(req, res)
             return res.status(404).json({ message: "User not found" });
         }
 
+        if(foundUser.isBlocked)
+        {
+            return res.status(403).json({ message: "Your account has been blocked. Please contact support." });
+        }
+
         const isPasswordValid = bcrypt.compareSync(password, foundUser.password);
 
         if(!isPasswordValid)
         {
             return res.status(401).json({ message: "Invalid password" });
-        }
-
-        if(foundUser.isBlocked)
-        {
-            return res.status(403).json({ message: "Your account has been blocked. Please contact support." });
         }
 
         const token = jwt.sign(
